@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body{
+        background-color: rgb(253, 226, 226);
+    }
+    .convert{
+        font-size: 50px;
+    }
+    #text{
+        background-color: rgb(37, 35, 37);
+        color: white;
+        border: 3px solid rgb(255, 255, 255);
+        box-sizing: border-box;
+        font-size: 1.1rem;
+
+    }
+    button{
+        padding: 12px;
+        font-size: 1.2rem;
+        color: white;
+        border-color: antiquewhite;
+    }
+    #counter{
+        font-size: 1.5rem;
+    }
+</style>
+<body>
+    <h1 class="convert">Convert Case</h1>
+    <div>
+        <textarea name="" id="text" rows="20" cols="120"></textarea>
+    </div>
+
+    <div class="main">
+        <button id="btn1" style="background-color: rgb(2, 126, 126);">UPPERCASE</button>
+        <button id="btn2" style="background-color: rgb(4, 153, 66);">Lowercase</button>
+        <button id="btn3" style="background-color: rgb(230, 214, 2);">Sentencecase</button>
+        <button id="btn4" style="background-color: rgb(204, 6, 178);">Capitalizedcase</button>
+        <button id="btn5" style="background-color: rgb(228, 6, 98);">aLtErNaTiNgcase</button>
+        <button id="btn6" style="background-color: rgb(241, 117, 1);">CopyToClipboard</button>
+        <button id="btn7" style="background-color: rgba(21, 2, 126, 0.993);">Download</button>
+        <button id="btn8" style="background-color: rgb(95, 255, 2);">Clear All</button>
+        <p id="counter">Character Count: <span id="CountIn">0</span></p>
+    </div>
+
+  <script>
+    let text=document.querySelector("textarea");
+    let btn1=document.getElementById("btn1");
+    let btn2=document.getElementById("btn2");
+    let btn3=document.getElementById("btn3");
+    let btn4=document.getElementById("btn4");
+    let btn5=document.getElementById("btn5");
+    let btn6=document.getElementById("btn6");
+    let btn7=document.getElementById("btn7");
+    let btn8=document.getElementById("btn8");
+    let CountIn=document.querySelector("#CountIn");
+
+    let count=0;
+
+
+
+// ***********************************UPPERCASE***************************************
+btn1.addEventListener("click",()=>{
+    text.value=text.value.toUpperCase();
+})
+
+// ***************************************lowercase*************************************
+btn2.addEventListener("click",()=>{
+    text.value=text.value.toLowerCase();
+})
+
+// ******************************************Sentence cASE*********************************
+btn3.addEventListener("click",()=>{
+    let mytext= text.value
+    let result= mytext.charAt(0).toUpperCase()+ mytext.slice(1)
+    text.value=result
+})
+
+// *****************************************Capitalizedcase************************************
+btn4.addEventListener("click",()=>{
+    let mytext= text.value.toLowerCase();
+    let splitResult= mytext.split(' ');
+
+    for(let i=0; i<splitResult.length; i++){
+        splitResult[i]=splitResult[i].charAt(0).toUpperCase()+splitResult[i].slice(1)
+    }
+    let ans=splitResult.join(" ")
+        text.value=ans 
+})
+
+
+
+// ***************************************alternatecase*****************************************
+btn5.addEventListener("click",()=>{
+
+    let mydata=text.value.toLowerCase();
+
+    let newdata=''
+
+    for(let i=0; i<=mydata.length-1; i++){
+        if(i%2==0){
+            newdata+= mydata[i].toUpperCase()
+        }
+        else{
+            newdata+=mydata[i]
+        }
+    }
+    text.value=newdata
+    console.log(newdata.length)
+})
+
+// *************************************copytoclipboard***********************************
+
+btn6.addEventListener("click",()=>{
+  let ans= navigator.clipboard.writeText(text.value)
+    alert("copy to  clipboard : " + text.value)
+})
+
+// *******************************download****************************************
+
+
+
+function download(filename,myText){
+    var element= document.createElement('a')
+  element.setAttribute('href','data:text/plain;charset=UTF-8,'+ encodeURIComponent(myText));
+  element.setAttribute('download',filename);
+    element.style.display='none';
+    document.body.appendChild(element);
+  element.click()
+    document.body.removeChild(element);
+}
+
+
+btn7.addEventListener("click",()=>{
+    
+    download("mydownloadText.txt",text.value)
+    // console.log(download())
+    
+})
+
+
+// *********************************clear all*******************************
+
+btn8.addEventListener("click",()=>{
+text.value=''
+})
+
+// ********************************* Character count********************************************
+text.addEventListener("keydown",(f)=>{
+    let mydata= f.target.value
+    CountIn.textContent=mydata.length
+})
+
+
+  </script>  
+</body>
+</html>
